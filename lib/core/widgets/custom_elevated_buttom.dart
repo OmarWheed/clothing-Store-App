@@ -20,7 +20,7 @@ class CustomElevatedButtom extends StatelessWidget {
         minimumSize: Size(double.infinity, 52),
       ),
       onPressed: onPressed,
-      child: child,
+      child: child!,
     );
   }
 }
