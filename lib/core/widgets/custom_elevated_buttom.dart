@@ -9,7 +9,7 @@ class CustomElevatedButtom extends StatelessWidget {
     this.child,
   });
 
-  final Function()? onPressed;
+  final void Function()? onPressed;
   final Widget? child;
   final Color? color;
   @override
