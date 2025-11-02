@@ -10,7 +10,7 @@ class ClothingStoreApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: AppColor.bgColor),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.aboutYouView,
+      initialRoute: Routes.loginView,
       onGenerateRoute: onGenerateRoute,
     );
   }

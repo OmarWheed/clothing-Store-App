@@ -1,0 +1,51 @@
+import 'dart:developer';
+
+import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/feature/auth/domain/usecase/sign_in_usecase.dart';
+import 'package:clothing_store/feature/auth/domain/usecase/sign_in_with_google_usecase.dart';
+import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+
+@injectable
+class AuthViewModel extends Cubit<AuthViewModelState> {
+  final SignInUseCase _signInUsecase;
+  final SignInWithGoogleUseCase _signInWithGoogleUseCase;
+  AuthViewModel(this._signInUsecase, this._signInWithGoogleUseCase)
+    : super(AuthViewModelState());
+
+  void loginWithGoogle() async {
+    emit(state.copyWith(status: AuthStates.loading));
+    var res = await _signInWithGoogleUseCase.signInWithGoogle();
+    switch (res) {
+      case Success<UserCredential>():
+        emit(state.copyWith(data: res, status: AuthStates.success));
+      case Failure<UserCredential>():
+        emit(
+          state.copyWith(
+            data: null,
+            status: AuthStates.failure,
+            errorMessage: res.exception.message,
+          ),
+        );
+    }
+  }
+
+  void login({required String email, required String password}) async {
+    emit(state.copyWith(status: AuthStates.loading));
+    var res = await _signInUsecase.signInWithEmailAndPassowrd(email, password);
+    switch (res) {
+      case Success<User>():
+        emit(state.copyWith(data: res, status: AuthStates.success));
+      case Failure<User>():
+        log(res.exception.message.toString());
+        emit(
+          state.copyWith(
+            status: AuthStates.failure,
+            errorMessage: res.exception.message,
+          ),
+        );
+    }
+  }
+}

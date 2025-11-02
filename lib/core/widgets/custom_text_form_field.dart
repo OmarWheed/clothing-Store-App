@@ -7,15 +7,17 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     super.key,
     this.labelText,
+    this.controller,
     this.obscureText = false,
   });
   final String? labelText;
   final bool? obscureText;
   final TextInputType? keyboardType;
-
+  final TextEditingController?controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText!,
       keyboardType: keyboardType,
       decoration: InputDecoration(
