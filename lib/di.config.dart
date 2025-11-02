@@ -51,6 +51,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i720.AuthViewModel(
         gh<_i431.SignInUseCase>(),
         gh<_i771.SignInWithGoogleUseCase>(),
+        gh<_i748.SignInWithFacebookUseCase>(),
       ),
     );
     return this;

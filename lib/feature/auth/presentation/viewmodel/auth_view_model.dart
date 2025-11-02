@@ -1,7 +1,7 @@
 import 'dart:developer';
-
 import 'package:clothing_store/core/service/result.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_usecase.dart';
+import 'package:clothing_store/feature/auth/domain/usecase/sign_in_with_facebook_usecase.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,12 +12,33 @@ import 'package:injectable/injectable.dart';
 class AuthViewModel extends Cubit<AuthViewModelState> {
   final SignInUseCase _signInUsecase;
   final SignInWithGoogleUseCase _signInWithGoogleUseCase;
-  AuthViewModel(this._signInUsecase, this._signInWithGoogleUseCase)
-    : super(AuthViewModelState());
+  final SignInWithFacebookUseCase _signInWithFacebookUseCase;
+  AuthViewModel(
+    this._signInUsecase,
+    this._signInWithGoogleUseCase,
+    this._signInWithFacebookUseCase,
+  ) : super(AuthViewModelState());
 
   void loginWithGoogle() async {
     emit(state.copyWith(status: AuthStates.loading));
     var res = await _signInWithGoogleUseCase.signInWithGoogle();
+    switch (res) {
+      case Success<UserCredential>():
+        emit(state.copyWith(data: res, status: AuthStates.success));
+      case Failure<UserCredential>():
+        emit(
+          state.copyWith(
+            data: null,
+            status: AuthStates.failure,
+            errorMessage: res.exception.message,
+          ),
+        );
+    }
+  }
+
+  void loginWithFacebook() async {
+    emit(state.copyWith(status: AuthStates.loading));
+    var res = await _signInWithFacebookUseCase.signInWithFacebook();
     switch (res) {
       case Success<UserCredential>():
         emit(state.copyWith(data: res, status: AuthStates.success));

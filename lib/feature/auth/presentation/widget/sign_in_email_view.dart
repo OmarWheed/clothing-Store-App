@@ -38,6 +38,7 @@ class _SignInEmailViewState extends State<SignInEmailView> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AuthViewModel>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,14 +67,16 @@ class _SignInEmailViewState extends State<SignInEmailView> {
           title: "Continue With Google",
           logo: AppPNG.googlePng,
           onPressed: () {
-            context.read<AuthViewModel>().loginWithGoogle();
+            cubit.loginWithGoogle();
           },
         ),
         SizedBox(height: 12),
         _buildSignInOption(
           title: "Continue With Facebook",
           logo: AppPNG.facebookPng,
-          onPressed: () {},
+          onPressed: () {
+            cubit.loginWithFacebook();
+          },
         ),
       ],
     );
