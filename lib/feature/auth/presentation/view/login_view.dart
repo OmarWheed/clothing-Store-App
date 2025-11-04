@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:clothing_store/core/utils/app_text_style.dart';
+import 'package:clothing_store/core/utils/app_toast.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model_state.dart';
 import 'package:clothing_store/feature/auth/presentation/widget/sign_in_email_view.dart';
@@ -38,18 +38,14 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 23),
         child: BlocListener<AuthViewModel, AuthViewModelState>(
           listener: (context, state) {
-            switch (state.status) {
-              case AuthStates.success:
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text("Success")));
-              case AuthStates.failure:
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
-              case AuthStates.loading:
-              case AuthStates.inital:
-                log("Loading");
+            // Show or hide the global loading overlay based on the state's isLoading flag
+            Toast.showLoading(context: context, isLoading: state.isLoading);
+
+            // Handle terminal states with toasts
+            if (state.isSuccess) {
+              Toast.showToast(context: context, msg: "Success",);
+            } else if (state.isFailure) {
+              Toast.showToast(context: context, msg: "${state.errorMessage}");
             }
           },
 

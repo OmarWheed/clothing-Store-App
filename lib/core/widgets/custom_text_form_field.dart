@@ -9,14 +9,18 @@ class CustomTextFormField extends StatelessWidget {
     this.labelText,
     this.controller,
     this.obscureText = false,
+    this.validator,
   });
   final String? labelText;
   final bool? obscureText;
   final TextInputType? keyboardType;
-  final TextEditingController?controller;
+  final String? Function(String?)? validator;
+
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: controller,
       obscureText: obscureText!,
       keyboardType: keyboardType,

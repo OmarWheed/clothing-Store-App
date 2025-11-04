@@ -8,6 +8,6 @@ class Success<T> extends Result<T> {
 }
 
 class Failure<T> extends Result<T> {
-  CustomError exception;
+  CustomError? exception;
   Failure(this.exception);
 }

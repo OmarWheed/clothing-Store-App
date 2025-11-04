@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:clothing_store/core/utils/app_text_style.dart';
+import 'package:clothing_store/core/utils/app_validation.dart';
 import 'package:clothing_store/core/widgets/custom_elevated_buttom.dart';
 import 'package:clothing_store/core/widgets/custom_text_form_field.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
@@ -16,9 +15,12 @@ class SignInPasswordView extends StatefulWidget {
 
 class _SignInPasswordViewState extends State<SignInPasswordView> {
   late TextEditingController _passwordController;
+  late GlobalKey<FormState> _formKey;
+
   @override
   void initState() {
     super.initState();
+    _formKey = GlobalKey<FormState>();
     _passwordController = TextEditingController();
   }
 
@@ -30,32 +32,33 @@ class _SignInPasswordViewState extends State<SignInPasswordView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 32),
-        CustomTextFormField(
-          labelText: "Password",
-          controller: _passwordController,
-        ),
-        SizedBox(height: 16),
-        CustomElevatedButtom(
-          onPressed: () {
-            log(widget.email);
-            context.read<AuthViewModel>().login(
-              email: widget.email,
-              password: _passwordController.text,
-            );
-          },
-          /*
-      "omarwheed@gmail.com",
-      "omar123",
-    */
-          child: Text("Continue", style: AppTextStyle.medium16),
-        ),
-        SizedBox(height: 16),
-        _buildCreateAccount(),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 32),
+          CustomTextFormField(
+          validator: Validator.validatePassword,
+            labelText: "Password",
+            controller: _passwordController,
+          ),
+          SizedBox(height: 16),
+          CustomElevatedButtom(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                context.read<AuthViewModel>().login(
+                  email: widget.email,
+                  password: _passwordController.text,
+                );
+              }
+            },
+            child: Text("Continue", style: AppTextStyle.medium16),
+          ),
+          SizedBox(height: 16),
+          _buildCreateAccount(),
+        ],
+      ),
     );
   }
 

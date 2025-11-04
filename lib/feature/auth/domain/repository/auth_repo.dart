@@ -1,4 +1,5 @@
 import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/feature/auth/domain/entity/sign_up_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepo {
@@ -8,4 +9,9 @@ abstract class AuthRepo {
   );
   Future<Result<UserCredential>> signInWithGoogle();
   Future<Result<UserCredential>> signInWithFacebook();
+  Future<Result<void>?> signUp(SignUpEntity signUpEntity);
+  Future<Result<UserCredential>> createUserWithEmailAndPassword(
+    String email,
+    String password,
+  );
 }

@@ -25,7 +25,12 @@ Route onGenerateRoute(RouteSettings routes) {
         ),
       );
     case Routes.signupView:
-      return MaterialPageRoute(builder: (context) => SignUpView());
+      return MaterialPageRoute(
+        builder: (context) => BlocProvider(
+          create: (context) => getIt.get<AuthViewModel>(),
+          child: SignUpView(),
+        ),
+      );
     case Routes.sendEmailView:
       return MaterialPageRoute(builder: (context) => SendEmailView());
     case Routes.aboutYouView:

@@ -8,4 +8,8 @@ abstract class AuthService {
   );
   Future<Result<UserCredential>> signInWithGoogle();
   Future<Result<UserCredential>> signInWithFacebook();
+  Future<Result<UserCredential>> createUserWithEmailAndPassword(
+    String email,
+    String password,
+  );
 }

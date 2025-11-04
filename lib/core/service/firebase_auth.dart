@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: AuthService)
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
@@ -74,6 +75,22 @@ class FirebaseAuthService implements AuthService {
 
       final userCredential = await _auth.signInWithCredential(credential);
       return Success(userCredential);
+    } on Exception catch (e) {
+      return Failure(HandleServerErorr.handleFirebaseError(e));
+    }
+  }
+
+  @override
+  Future<Result<UserCredential>> createUserWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return Success(credential);
     } on Exception catch (e) {
       return Failure(HandleServerErorr.handleFirebaseError(e));
     }
