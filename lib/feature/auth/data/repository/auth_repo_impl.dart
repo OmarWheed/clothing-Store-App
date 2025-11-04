@@ -33,4 +33,7 @@ class AuthRepoImpl implements AuthRepo {
     String email,
     String password,
   ) => _dataSourse.createUserWithEmailAndPassword(email, password);
+  
+  @override
+  Future<Result<void>?> resetPassword(String email) =>_dataSourse.resetPassword(email);
 }

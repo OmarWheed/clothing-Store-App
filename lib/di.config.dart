@@ -19,6 +19,7 @@ import 'core/service/firebase_store.dart' as _i944;
 import 'feature/auth/data/datasourse/remote_data_sourse.dart' as _i482;
 import 'feature/auth/data/repository/auth_repo_impl.dart' as _i323;
 import 'feature/auth/domain/repository/auth_repo.dart' as _i819;
+import 'feature/auth/domain/usecase/reset_password_usecase.dart' as _i227;
 import 'feature/auth/domain/usecase/sign_in_usecase.dart' as _i431;
 import 'feature/auth/domain/usecase/sign_in_with_facebook_usecase.dart'
     as _i748;
@@ -45,6 +46,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i819.AuthRepo>(
       () => _i323.AuthRepoImpl(gh<_i482.RemoteDataSourse>()),
     );
+    gh.factory<_i227.ResetPasswordUseCase>(
+      () => _i227.ResetPasswordUseCase(gh<_i819.AuthRepo>()),
+    );
     gh.factory<_i431.SignInUseCase>(
       () => _i431.SignInUseCase(gh<_i819.AuthRepo>()),
     );
@@ -63,6 +67,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i771.SignInWithGoogleUseCase>(),
         gh<_i748.SignInWithFacebookUseCase>(),
         gh<_i603.SignUpUsecase>(),
+        gh<_i227.ResetPasswordUseCase>(),
       ),
     );
     return this;

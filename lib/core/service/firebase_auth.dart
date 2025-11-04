@@ -95,4 +95,14 @@ class FirebaseAuthService implements AuthService {
       return Failure(HandleServerErorr.handleFirebaseError(e));
     }
   }
+
+  @override
+  Future<Result<void>?> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return Success(null);
+    } on Exception catch (e) {
+      return Failure(HandleServerErorr.handleFirebaseError(e));
+    }
+  }
 }

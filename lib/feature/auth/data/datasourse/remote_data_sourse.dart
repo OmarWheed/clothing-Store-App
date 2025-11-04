@@ -14,4 +14,5 @@ abstract class RemoteDataSourse {
     String email,
     String password,
   );
+  Future<Result<void>?> resetPassword(String email);
 }

@@ -14,4 +14,7 @@ abstract class AuthRepo {
     String email,
     String password,
   );
+  Future<Result<void>?> resetPassword(
+    String email,
+  );
 }

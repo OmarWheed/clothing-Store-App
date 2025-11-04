@@ -1,8 +1,10 @@
+import 'package:clothing_store/core/config/on_generate_route.dart';
 import 'package:clothing_store/core/utils/app_text_style.dart';
 import 'package:clothing_store/core/utils/app_validation.dart';
 import 'package:clothing_store/core/widgets/custom_elevated_buttom.dart';
 import 'package:clothing_store/core/widgets/custom_text_form_field.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +41,7 @@ class _SignInPasswordViewState extends State<SignInPasswordView> {
         children: [
           SizedBox(height: 32),
           CustomTextFormField(
-          validator: Validator.validatePassword,
+            validator: Validator.validatePassword,
             labelText: "Password",
             controller: _passwordController,
           ),
@@ -65,6 +67,10 @@ class _SignInPasswordViewState extends State<SignInPasswordView> {
   Widget _buildCreateAccount() {
     return Text.rich(
       TextSpan(
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            Navigator.of(context).pushReplacementNamed(Routes.sendEmailView);
+          },
         children: [
           TextSpan(text: "Forget Password ? ", style: AppTextStyle.regular12),
           TextSpan(text: "Reset", style: AppTextStyle.medium12),

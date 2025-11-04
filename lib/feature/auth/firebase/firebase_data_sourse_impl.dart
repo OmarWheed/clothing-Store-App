@@ -26,11 +26,17 @@ class FirebaseDataSourseImpl implements RemoteDataSourse {
   Future<Result<UserCredential>> signInWithGoogle() =>
       _authService.signInWithGoogle();
 
-
   @override
   Future<Result<void>?> signUp(SignUpModel signUpModel) =>
       _dbService.addData(path: "user", data: signUpModel.toJson());
-      
-        @override
-        Future<Result<UserCredential>> createUserWithEmailAndPassword(String email, String password) =>_authService.createUserWithEmailAndPassword(email, password);
+
+  @override
+  Future<Result<UserCredential>> createUserWithEmailAndPassword(
+    String email,
+    String password,
+  ) => _authService.createUserWithEmailAndPassword(email, password);
+
+  @override
+  Future<Result<void>?> resetPassword(String email) =>
+      _authService.resetPassword(email);
 }

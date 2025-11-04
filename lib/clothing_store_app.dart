@@ -2,6 +2,7 @@ import 'package:clothing_store/core/config/on_generate_route.dart';
 import 'package:clothing_store/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+// TODO : handle theme data in light and dart
 class ClothingStoreApp extends StatelessWidget {
   const ClothingStoreApp({super.key});
 
@@ -10,7 +11,7 @@ class ClothingStoreApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: AppColor.bgColor),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.signupView,
+      initialRoute: Routes.loginView,
       onGenerateRoute: onGenerateRoute,
     );
   }

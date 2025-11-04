@@ -39,10 +39,8 @@ class _SignUpViewState extends State<SignUpView> {
       ),
       body: BlocListener<AuthViewModel, AuthViewModelState>(
         listener: (context, state) {
-          // Show or hide the global loading overlay based on the state's isLoading flag
           Toast.showLoading(context: context, isLoading: state.isLoading);
 
-          // Handle terminal states with toasts
           if (state.isSuccess) {
             Toast.showToast(context: context, msg: "Success");
           } else if (state.isFailure) {
@@ -56,6 +54,7 @@ class _SignUpViewState extends State<SignUpView> {
               SizedBox(height: 20),
               Expanded(
                 child: PageView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _pageController,
                   itemCount: _signViewPage.length,
                   itemBuilder: (context, index) => _signViewPage[index],
@@ -72,8 +71,8 @@ class _SignUpViewState extends State<SignUpView> {
     CreateAccountView(
       onPressed: () {
         _pageController.nextPage(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.bounceIn,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeIn,
         );
       },
     ),

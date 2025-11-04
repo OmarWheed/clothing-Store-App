@@ -12,4 +12,5 @@ abstract class AuthService {
     String email,
     String password,
   );
+  Future<Result<void>?> resetPassword(String email);
 }

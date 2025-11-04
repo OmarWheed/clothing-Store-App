@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key, this.onPressed});
-  final Function()? onPressed;
+  final void Function()? onPressed;
 
   @override
   State<CreateAccountView> createState() => _CreateAccountViewState();
@@ -81,12 +81,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   email: _emailAddressContoller.text,
                   password: _passwordController.text,
                 );
-    
+
                 if (_formKey.currentState!.validate()) {
                   context.read<AuthViewModel>().signUp(_entity);
                 }
-    
-                //widget.onPressed;
               },
               child: Text("Continue", style: AppTextStyle.medium16),
             ),
@@ -99,13 +97,22 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   }
 
   Widget _buildCreateAccount() {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(text: "Forget Password ?", style: AppTextStyle.regular12),
-          TextSpan(text: "Reset", style: AppTextStyle.medium12),
-        ],
-      ),
+    // Use a Text + TextButton pair so the Reset action is clearly tappable.
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("Forget Password ?", style: AppTextStyle.regular12),
+        SizedBox(width: 8),
+        TextButton(
+          onPressed: widget.onPressed,
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            minimumSize: Size(0, 0),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text("Reset", style: AppTextStyle.medium12),
+        ),
+      ],
     );
   }
 }

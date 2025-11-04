@@ -14,7 +14,7 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-//:TODO "Remove Controller and use onPageChange Or best Performance "
+//TODO: "Remove Controller and use onPageChange Or best Performance "
 class _LoginViewState extends State<LoginView> {
   late PageController _pageController;
   String emailAddress = "";
@@ -38,12 +38,9 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 23),
         child: BlocListener<AuthViewModel, AuthViewModelState>(
           listener: (context, state) {
-            // Show or hide the global loading overlay based on the state's isLoading flag
             Toast.showLoading(context: context, isLoading: state.isLoading);
-
-            // Handle terminal states with toasts
             if (state.isSuccess) {
-              Toast.showToast(context: context, msg: "Success",);
+              Toast.showToast(context: context, msg: "Success");
             } else if (state.isFailure) {
               Toast.showToast(context: context, msg: "${state.errorMessage}");
             }

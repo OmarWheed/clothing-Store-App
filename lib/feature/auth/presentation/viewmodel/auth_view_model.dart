@@ -1,5 +1,6 @@
 import 'package:clothing_store/core/service/result.dart';
 import 'package:clothing_store/feature/auth/domain/entity/sign_up_entity.dart';
+import 'package:clothing_store/feature/auth/domain/usecase/reset_password_usecase.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_usecase.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_with_facebook_usecase.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_with_google_usecase.dart';
@@ -15,12 +16,34 @@ class AuthViewModel extends Cubit<AuthViewModelState> {
   final SignInWithGoogleUseCase _signInWithGoogleUseCase;
   final SignInWithFacebookUseCase _signInWithFacebookUseCase;
   final SignUpUsecase _signUpUsecase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
   AuthViewModel(
     this._signInUsecase,
     this._signInWithGoogleUseCase,
     this._signInWithFacebookUseCase,
     this._signUpUsecase,
+    this._resetPasswordUseCase,
   ) : super(AuthViewModelState());
+
+  void resetPassword() async {
+    final String email = "omardev087@gmail.com";
+    emit(state.copyWith(status: AuthStates.loading));
+
+    var res = await _resetPasswordUseCase.resetPassword(email);
+    switch (res) {
+      case null:
+      case Success<void>():
+        emit(state.copyWith(data: res, status: AuthStates.success));
+      case Failure<void>():
+        emit(
+          state.copyWith(
+            data: null,
+            status: AuthStates.failure,
+            errorMessage: res.exception?.message,
+          ),
+        );
+    }
+  }
 
   void loginWithGoogle() async {
     emit(state.copyWith(status: AuthStates.loading));
