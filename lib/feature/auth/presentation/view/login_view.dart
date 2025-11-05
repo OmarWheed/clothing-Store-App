@@ -1,3 +1,4 @@
+import 'package:clothing_store/core/config/on_generate_route.dart';
 import 'package:clothing_store/core/utils/app_text_style.dart';
 import 'package:clothing_store/core/utils/app_toast.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
@@ -41,6 +42,7 @@ class _LoginViewState extends State<LoginView> {
             Toast.showLoading(context: context, isLoading: state.isLoading);
             if (state.isSuccess) {
               Toast.showToast(context: context, msg: "Success");
+              Navigator.of(context).pushReplacementNamed(Routes.homeView);
             } else if (state.isFailure) {
               Toast.showToast(context: context, msg: "${state.errorMessage}");
             }

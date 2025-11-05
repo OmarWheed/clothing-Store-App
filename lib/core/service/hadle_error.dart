@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+
+
+//TODO Inhance the message error if user in not found 
 class HandleServerErorr {
   static CustomError handleFirebaseError(Exception e) {
     if (e is FirebaseAuthException) {
       switch (e.code) {
         case 'user-not-found':
           return ServerError("No user found for that email.");
-
         case 'wrong-password':
           return ServerError("Wrong password provided for that user.");
-
         case 'weak-password':
           return ServerError('The password provided is too weak.');
         case 'email-already-in-use':

@@ -30,10 +30,15 @@ class _SignUpViewState extends State<SignUpView> {
         backgroundColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(left: 23 - 12),
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: AppColor.bgColorTextField,
-            child: SvgPicture.asset(AppSVG.arrowSvg, height: 16),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundColor: AppColor.bgColorTextField,
+              child: SvgPicture.asset(AppSVG.arrowSvg, height: 16),
+            ),
           ),
         ),
       ),
@@ -71,7 +76,7 @@ class _SignUpViewState extends State<SignUpView> {
     CreateAccountView(
       onPressed: () {
         _pageController.nextPage(
-          duration: Duration(seconds: 1),
+          duration: Duration(microseconds: 100),
           curve: Curves.easeIn,
         );
       },

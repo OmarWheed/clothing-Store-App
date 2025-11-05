@@ -5,6 +5,7 @@ import 'package:clothing_store/feature/auth/presentation/view/send_email_view.da
 import 'package:clothing_store/feature/auth/presentation/view/sign_up_view.dart';
 import 'package:clothing_store/feature/auth/presentation/view/tell_us_about_youself.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
+import 'package:clothing_store/feature/home/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,6 +14,7 @@ abstract class Routes {
   static const String signupView = "SIGN-UP-VIEW";
   static const String sendEmailView = "SEND-EMAIL-VIEW";
   static const String aboutYouView = "ABOUT-YOURSELF-VIEW";
+  static const String homeView = "HOME-VIEW";
 }
 
 Route onGenerateRoute(RouteSettings routes) {
@@ -35,6 +37,8 @@ Route onGenerateRoute(RouteSettings routes) {
       return MaterialPageRoute(builder: (context) => SendEmailView());
     case Routes.aboutYouView:
       return MaterialPageRoute(builder: (context) => AboutYouView());
+    case Routes.homeView:
+      return MaterialPageRoute(builder: (context) => HomeView());
     default:
       return _unKnownPage();
   }

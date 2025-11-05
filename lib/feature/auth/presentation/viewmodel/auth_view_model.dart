@@ -25,8 +25,8 @@ class AuthViewModel extends Cubit<AuthViewModelState> {
     this._resetPasswordUseCase,
   ) : super(AuthViewModelState());
 
-  void resetPassword() async {
-    final String email = "omardev087@gmail.com";
+  void resetPassword(String email) async {
+ 
     emit(state.copyWith(status: AuthStates.loading));
 
     var res = await _resetPasswordUseCase.resetPassword(email);

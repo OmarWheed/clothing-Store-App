@@ -1,5 +1,6 @@
 import 'package:clothing_store/core/config/on_generate_route.dart';
 import 'package:clothing_store/core/utils/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // TODO : handle theme data in light and dart
@@ -11,7 +12,9 @@ class ClothingStoreApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: AppColor.bgColor),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.loginView,
+      initialRoute: FirebaseAuth.instance.currentUser?.uid == null
+          ? Routes.loginView
+          : Routes.homeView,
       onGenerateRoute: onGenerateRoute,
     );
   }

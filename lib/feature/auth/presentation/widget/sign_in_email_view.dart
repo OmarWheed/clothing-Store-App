@@ -41,46 +41,48 @@ class _SignInEmailViewState extends State<SignInEmailView> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AuthViewModel>();
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 32),
-          CustomTextFormField(
-            validator: Validator.validateEmail,
-            labelText: "Email Address",
-            controller: _emailController,
-          ),
-          SizedBox(height: 16),
-          CustomElevatedButtom(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                widget.emailField(_emailController.text);
-                widget.onPressed();
-              }
-            },
-            child: Text("Continue", style: AppTextStyle.medium16),
-          ),
-          SizedBox(height: 16),
-          _buildCreateAccount(),
-          SizedBox(height: 71),
-          _buildSignInOption(
-            title: "Continue With Google",
-            logo: AppPNG.googlePng,
-            onPressed: () {
-              cubit.loginWithGoogle();
-            },
-          ),
-          SizedBox(height: 12),
-          _buildSignInOption(
-            title: "Continue With Facebook",
-            logo: AppPNG.facebookPng,
-            onPressed: () {
-              cubit.loginWithFacebook();
-            },
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 32),
+            CustomTextFormField(
+              validator: Validator.validateEmail,
+              labelText: "Email Address",
+              controller: _emailController,
+            ),
+            SizedBox(height: 16),
+            CustomElevatedButtom(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  widget.emailField(_emailController.text);
+                  widget.onPressed();
+                }
+              },
+              child: Text("Continue", style: AppTextStyle.medium16),
+            ),
+            SizedBox(height: 16),
+            RichTextWidget(),
+            SizedBox(height: 71),
+            _buildSignInOption(
+              title: "Continue With Google",
+              logo: AppPNG.googlePng,
+              onPressed: () {
+                cubit.loginWithGoogle();
+              },
+            ),
+            SizedBox(height: 12),
+            _buildSignInOption(
+              title: "Continue With Facebook",
+              logo: AppPNG.facebookPng,
+              onPressed: () {
+                cubit.loginWithFacebook();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -110,20 +112,28 @@ class _SignInEmailViewState extends State<SignInEmailView> {
       ),
     );
   }
+}
 
-  Widget _buildCreateAccount() {
-    return Text.rich(
-      TextSpan(
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            Navigator.of(context).pushReplacementNamed(Routes.signupView);
-          },
+class RichTextWidget extends StatelessWidget {
+  const RichTextWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
         children: [
           TextSpan(
             text: "Don't have an Account ?",
             style: AppTextStyle.regular12,
           ),
-          TextSpan(text: "Create One", style: AppTextStyle.medium12),
+          TextSpan(
+            text: "Create One",
+            style: AppTextStyle.medium12,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.of(context).pushNamed(Routes.signupView);
+              },
+          ),
         ],
       ),
     );
