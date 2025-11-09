@@ -1,12 +1,12 @@
 import 'package:clothing_store/core/service/auth_service.dart';
-import 'package:clothing_store/core/service/hadle_error.dart';
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/handle_error.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: AuthService)
+@LazySingleton(as: AuthService)
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -24,7 +24,7 @@ class FirebaseAuthService implements AuthService {
       );
       return Success(credential.user);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 
@@ -48,7 +48,7 @@ class FirebaseAuthService implements AuthService {
       );
       return Success(userCredential);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 
@@ -76,7 +76,7 @@ class FirebaseAuthService implements AuthService {
       final userCredential = await _auth.signInWithCredential(credential);
       return Success(userCredential);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 
@@ -92,7 +92,7 @@ class FirebaseAuthService implements AuthService {
       );
       return Success(credential);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 
@@ -102,7 +102,7 @@ class FirebaseAuthService implements AuthService {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return Success(null);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 }

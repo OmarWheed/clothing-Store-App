@@ -1,4 +1,4 @@
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/result.dart';
 
 abstract class DbService<T> {
   Future<Result<void>?> addData({

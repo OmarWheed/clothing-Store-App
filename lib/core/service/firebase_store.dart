@@ -1,10 +1,10 @@
 import 'package:clothing_store/core/service/db_service.dart';
-import 'package:clothing_store/core/service/hadle_error.dart';
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/handle_error.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: DbService)
+@LazySingleton(as: DbService)
 class FirebaseStoreService implements DbService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
@@ -35,7 +35,7 @@ class FirebaseStoreService implements DbService {
 
       return Success(null);
     } on Exception catch (e) {
-      return Failure(HandleServerErorr.handleFirebaseError(e));
+      return Failure(FirebaseErrorHandler.handleError(e));
     }
   }
 }

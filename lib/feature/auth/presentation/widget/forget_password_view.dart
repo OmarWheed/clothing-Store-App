@@ -1,8 +1,7 @@
 import 'package:clothing_store/core/config/on_generate_route.dart';
-import 'package:clothing_store/core/utils/app_text_style.dart';
+import 'package:clothing_store/core/utils/app_extension.dart';
 import 'package:clothing_store/core/utils/app_validation.dart';
-import 'package:clothing_store/core/widgets/custom_elevated_buttom.dart';
-import 'package:clothing_store/core/widgets/custom_text_form_field.dart';
+import 'package:clothing_store/core/widgets/app_bar_widget.dart';
 import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,32 +31,45 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Forget Password", style: AppTextStyle.bold32),
-          SizedBox(height: 16),
-          CustomTextFormField(
-            validator: Validator.validateEmail,
-            labelText: "Enter Email address",
-            controller: _emailContoller,
+    return Scaffold(
+      appBar: AppBarWidget(),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 63),
+              Text("Forget Password", style: context.appTheme.bold32),
+              SizedBox(height: 16),
+              _emailField(),
+              SizedBox(height: 24),
+              _resetPasswordButton(),
+            ],
           ),
-          SizedBox(height: 24),
-          CustomElevatedButtom(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                context.read<AuthViewModel>().resetPassword(
-                  _emailContoller.text,
-                );
-                Navigator.pushNamed(context, Routes.sendEmailView);
-              }
-            },
-            child: Text("Continue", style: AppTextStyle.medium16),
-          ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget _resetPasswordButton() {
+    return ElevatedButton(
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          context.read<AuthViewModel>().resetPassword(_emailContoller.text);
+          Navigator.pushNamed(context, Routes.sendEmailView);
+        }
+      },
+      child: Text("Continue"),
+    );
+  }
+
+  Widget _emailField() {
+    return TextFormField(
+      validator: Validator.validateEmail,
+      decoration: InputDecoration(hintText: "Email Address"),
+      controller: _emailContoller,
     );
   }
 }

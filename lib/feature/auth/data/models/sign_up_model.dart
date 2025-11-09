@@ -3,8 +3,10 @@ class SignUpModel {
   String? firstName;
   String? lastName;
   final String? email;
+  String?gender;
+  String?age;
 
-  SignUpModel({required this.email, this.id, this.firstName, this.lastName});
+  SignUpModel({required this.email, this.id, this.firstName, this.lastName,this.gender,this.age});
 
   factory SignUpModel.fromJson(Map<String, dynamic> json) {
     return SignUpModel(
@@ -12,6 +14,7 @@ class SignUpModel {
       firstName: json['fistName'],
       id: json['id'],
       lastName: json['lastName'],
+
     );
   }
 
@@ -21,6 +24,8 @@ class SignUpModel {
       'firstName': firstName,
       'id': id,
       'lastName': lastName,
+      'age':age,
+      'gender':gender
     };
   }
 }

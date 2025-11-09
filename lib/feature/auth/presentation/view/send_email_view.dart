@@ -1,7 +1,6 @@
 import 'package:clothing_store/core/config/on_generate_route.dart';
 import 'package:clothing_store/core/utils/app_assets.dart';
-import 'package:clothing_store/core/utils/app_text_style.dart';
-import 'package:clothing_store/core/widgets/custom_elevated_buttom.dart';
+import 'package:clothing_store/core/utils/app_extension.dart';
 import 'package:flutter/material.dart';
 
 class SendEmailView extends StatelessWidget {
@@ -20,15 +19,15 @@ class SendEmailView extends StatelessWidget {
             Text(
               "We Sent you an Email to reset Your password.",
               textAlign: TextAlign.center,
-              style: AppTextStyle.medium24,
+              style: context.appTheme.bold24,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 91),
-              child: CustomElevatedButtom(
+              child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(Routes.loginView);
+                  Navigator.of(context).pushReplacementNamed(Routes.signInView);
                 },
-                child: Text("Return to Login", style: AppTextStyle.medium16),
+                child: Text("Return to Login"),
               ),
             ),
           ],

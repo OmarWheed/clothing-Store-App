@@ -1,15 +1,12 @@
-import 'package:clothing_store/core/utils/app_text_style.dart';
+import 'package:clothing_store/core/config/on_generate_route.dart';
+import 'package:clothing_store/core/utils/app_extension.dart';
 import 'package:clothing_store/core/utils/app_validation.dart';
-import 'package:clothing_store/core/widgets/custom_elevated_buttom.dart';
-import 'package:clothing_store/core/widgets/custom_text_form_field.dart';
 import 'package:clothing_store/feature/auth/domain/entity/sign_up_entity.dart';
-import 'package:clothing_store/feature/auth/presentation/viewmodel/auth_view_model.dart';
+import 'package:clothing_store/feature/auth/presentation/widget/rich_text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateAccountView extends StatefulWidget {
-  const CreateAccountView({super.key, this.onPressed});
-  final void Function()? onPressed;
+  const CreateAccountView({super.key});
 
   @override
   State<CreateAccountView> createState() => _CreateAccountViewState();
@@ -50,69 +47,78 @@ class _CreateAccountViewState extends State<CreateAccountView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
-            Text("Create Account", style: AppTextStyle.bold32),
+            Text("Create Account", style: context.appTheme.bold32),
             SizedBox(height: 16),
-            CustomTextFormField(
-              labelText: "Firstname",
-              controller: _firstNameContoller,
-              validator: Validator.validateName,
-            ),
-            CustomTextFormField(
-              validator: Validator.validateName,
-              labelText: "Lastname",
-              controller: _lastNameContoller,
-            ),
-            CustomTextFormField(
-              labelText: "Email Address",
-              controller: _emailAddressContoller,
-              validator: Validator.validateEmail,
-            ),
-            CustomTextFormField(
-              labelText: "Password",
-              validator: Validator.validatePassword,
-              controller: _passwordController,
-            ),
+            _fNameField(),
+            _lNameField(),
+            _emailField(),
+            _passwordField(),
             SizedBox(height: 24),
-            CustomElevatedButtom(
+            _signUpButton(),
+            SizedBox(height: 24),
+            RichTextWidget(
+              fText: 'Forget Password',
+              sText: 'Reset',
               onPressed: () {
-                SignUpEntity _entity = SignUpEntity(
-                  firstName: _firstNameContoller.text,
-                  lastName: _lastNameContoller.text,
-                  email: _emailAddressContoller.text,
-                  password: _passwordController.text,
-                );
-
-                if (_formKey.currentState!.validate()) {
-                  context.read<AuthViewModel>().signUp(_entity);
-                }
+                Navigator.of(context).pushNamed(Routes.forgetPasswordView);
               },
-              child: Text("Continue", style: AppTextStyle.medium16),
             ),
-            SizedBox(height: 24),
-            _buildCreateAccount(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCreateAccount() {
-    // Use a Text + TextButton pair so the Reset action is clearly tappable.
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text("Forget Password ?", style: AppTextStyle.regular12),
-        SizedBox(width: 8),
-        TextButton(
-          onPressed: widget.onPressed,
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            minimumSize: Size(0, 0),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Text("Reset", style: AppTextStyle.medium12),
-        ),
-      ],
+  Widget _fNameField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: "Firstname"),
+      controller: _firstNameContoller,
+      validator: Validator.validateName,
+    );
+  }
+
+  Widget _lNameField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: "Lastname"),
+      validator: Validator.validateName,
+
+      controller: _lastNameContoller,
+    );
+  }
+
+  Widget _signUpButton() {
+    return ElevatedButton(
+      onPressed: () {
+        SignUpEntity entity = SignUpEntity(
+          firstName: _firstNameContoller.text,
+          lastName: _lastNameContoller.text,
+          email: _emailAddressContoller.text,
+          password: _passwordController.text,
+        );
+
+        if (_formKey.currentState!.validate()) {
+          Navigator.of(
+            context,
+          ).pushNamed(Routes.aboutYouView, arguments: entity);
+        }
+      },
+      child: Text("Continue"),
+    );
+  }
+
+  Widget _passwordField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: "Password"),
+      validator: Validator.validatePassword,
+      controller: _passwordController,
+    );
+  }
+
+  Widget _emailField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: "Email Address"),
+      controller: _emailAddressContoller,
+      validator: Validator.validateEmail,
     );
   }
 }

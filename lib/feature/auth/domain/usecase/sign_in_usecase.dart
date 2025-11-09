@@ -1,9 +1,9 @@
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:clothing_store/feature/auth/domain/repository/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@lazySingleton
 class SignInUseCase {
   final AuthRepo _authRepo;
   SignInUseCase(this._authRepo);

@@ -1,4 +1,4 @@
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:clothing_store/feature/auth/domain/entity/sign_up_entity.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/reset_password_usecase.dart';
 import 'package:clothing_store/feature/auth/domain/usecase/sign_in_usecase.dart';
