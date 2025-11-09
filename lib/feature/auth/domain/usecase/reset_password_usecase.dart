@@ -1,8 +1,8 @@
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:clothing_store/feature/auth/domain/repository/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@lazySingleton
 class ResetPasswordUseCase {
   final AuthRepo _authRepo;
 

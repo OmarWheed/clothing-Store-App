@@ -1,4 +1,4 @@
-import 'package:clothing_store/core/service/result.dart';
+import 'package:clothing_store/core/error/result.dart';
 import 'package:clothing_store/feature/auth/domain/entity/sign_up_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

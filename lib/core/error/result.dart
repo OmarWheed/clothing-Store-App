@@ -1,4 +1,4 @@
-import 'package:clothing_store/core/service/hadle_error.dart';
+import 'package:clothing_store/core/error/handle_error.dart';
 
 sealed class Result<T> {}
 
