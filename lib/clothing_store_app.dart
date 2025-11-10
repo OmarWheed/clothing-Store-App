@@ -3,7 +3,6 @@ import 'package:clothing_store/core/config/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// TODO : handle theme data in light and dart
 class ClothingStoreApp extends StatelessWidget {
   const ClothingStoreApp({super.key});
 
