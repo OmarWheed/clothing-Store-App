@@ -22,7 +22,7 @@ class FirebaseAuthService implements AuthService {
         email: email,
         password: password,
       );
-      return Success(credential.user);
+      return Success( credential.user);
     } on Exception catch (e) {
       return Failure(FirebaseErrorHandler.handleError(e));
     }
